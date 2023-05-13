@@ -1,9 +1,9 @@
-# TODO
+# Your todos
 
 - [ ] Set `name` in `package.json` to something.
 - [ ] Write bookmarklet code in `src/bookmarklet.js`.
 - [ ] Write docs in `index.md`.
-- [ ] Deploy it (see below)
+- [ ] Deploy it ([see below](https://github.com/psalaets/eleventy-bookmarklet#deployment))
 
 # Scripts
 
