@@ -1,0 +1,24 @@
+default:
+  image: node:18.12.1
+
+# Stages run in the order listed here.
+# Jobs specify the stage they are in. Jobs in the same stage are run in parallel.
+# If all jobs in a stage are successful, the next stage starts.
+stages:
+  - deploy
+
+#################
+# Job definitions
+#################
+
+# Deploy to Gitlab Pages
+pages:
+  stage: deploy
+  script:
+    - npm ci
+    - npm run build:gitlab-pages
+  artifacts:
+    paths:
+      - public
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH

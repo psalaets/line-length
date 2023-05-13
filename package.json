@@ -1,0 +1,20 @@
+{
+  "name": "eleventy-bookmarklet",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "serve": "npx @11ty/eleventy --serve",
+    "build": "npx @11ty/eleventy",
+    "build:github-pages": "npx @11ty/eleventy",
+    "build:gitlab-pages": "npx @11ty/eleventy --input=. --output=public"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@11ty/eleventy": "^2.0.1",
+    "@rollup/plugin-node-resolve": "^15.0.2",
+    "@rollup/plugin-terser": "^0.4.1",
+    "rollup": "^3.21.7"
+  }
+}
