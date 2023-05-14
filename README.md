@@ -2,14 +2,15 @@
 
 11ty starter for a bookmarklet.
 
-## Your todos
+## Your Todos
 
+- [ ] Clone or fork or copy this repo
 - [ ] Set `name` in `package.json` to something.
 - [ ] Write bookmarklet code in `src/bookmarklet.js`.
 - [ ] Write docs in `index.md`.
 - [ ] Deploy it ([see below](https://github.com/psalaets/eleventy-bookmarklet#deployment))
 
-## Scripts
+## Available Scripts
 
 - `npm run serve` - Run server with file watching and auto refresh
 - `npm run build` - Generic build
