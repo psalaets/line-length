@@ -1,5 +1,5 @@
 {
-  "name": "eleventy-bookmarklet",
+  "name": "line-length",
   "version": "1.0.0",
   "description": "",
   "scripts": {
@@ -16,5 +16,8 @@
     "@rollup/plugin-node-resolve": "^15.0.2",
     "@rollup/plugin-terser": "^0.4.1",
     "rollup": "^3.21.7"
+  },
+  "dependencies": {
+    "split-text-nodes": "^6.1.0"
   }
 }
