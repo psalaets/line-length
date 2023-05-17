@@ -15,6 +15,7 @@ module.exports = async function bundleCode() {
 
     const code = await generateOutput(bundle);
 
+    console.log();
     console.log(`${code.length} characters:`);
     console.log(code);
 
@@ -30,6 +31,7 @@ module.exports = async function bundleCode() {
 
 async function generateOutput(bundle) {
   const { output } = await bundle.generate({
+    format: 'iife',
     plugins: [
       terser({
         module: true,
