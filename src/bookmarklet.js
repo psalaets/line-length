@@ -11,8 +11,9 @@ function activate(document) {
   function createInfoCard() {
     const cardElement = document.createElement('div');
     cardElement.style.cssText = `
-background-color: white;
-border: 2px solid black;
+color: #111;
+background-color: #fff;
+border: 2px solid #111;
 border-radius: 0.5rem;
 box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 display: none;
@@ -21,6 +22,7 @@ font-family: Consolas, monaco, monospace;
 padding: 0.8rem;
 position: fixed;
 z-index: 1;
+max-width: 20rem;
 `;
 
     document.body.appendChild(cardElement);
@@ -51,10 +53,10 @@ z-index: 1;
        */
       update(element, stats) {
         cardElement.innerHTML = `
-<div style="padding-bottom: 0.8rem; margin-bottom: 0.8rem; border-bottom: 1px solid lightgray;">${elementInfo(element)}</div>
+<div style="overflow-x: clip;white-space: nowrap;text-overflow: ellipsis;padding-bottom: 0.8rem; margin-bottom: 0.8rem; border-bottom: 1px solid lightgray;">${elementInfo(element)}</div>
 <div>Median: ${stats.median}</div>
 <div>Max: ${stats.max}</div>
-<div style="color: dimgray; font-size: 0.75rem; margin-top: 0.8rem; text-align: center;">Esc to close</div>
+<div style="color: dimgray; font-size: 0.8rem; margin-top: 0.8rem; text-align: center;">Esc to close</div>
 `;
       },
       destroy() {
@@ -65,14 +67,14 @@ z-index: 1;
 
   /**
    * @param {HTMLElement} element
-   * @returns {HTMLElement}
+   * @returns {string} html
    */
   function elementInfo(element) {
     return [
       '<span>',
-      `<span style="color: #5E2CA5">${element.nodeName.toLowerCase()}</span>`,
+      `<span style="color: #5E2CA5;">${element.nodeName.toLowerCase()}</span>`,
       element.id ? `<span style="color: #137752">#${element.id}</span>` : '',
-      element.classList.length ? `<span style="color: #E7040F">.${Array.from(element.classList).join('.')}</span>` : '',
+      element.classList.length ? `<span style="color: #E7040F;">.${Array.from(element.classList).join('.')}</span>` : '',
       '</span>',
     ].join('');
   }
