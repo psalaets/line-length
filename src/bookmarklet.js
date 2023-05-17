@@ -1,6 +1,10 @@
 import { splitTextNodes } from "split-text-nodes";
 
-function createInfoCard() {
+/**
+ * @param {HTMLElement} element
+ * @param {Stats} stats
+ */
+function createInfoCard(element, stats) {
   const cardElement = document.createElement('div');
   cardElement.style.cssText = `
 color: #111;
@@ -16,6 +20,21 @@ z-index: 1;
 max-width: 20rem;
 `;
 
+  const elementInfo = [
+    '<span>',
+    `<span style="color: #5E2CA5;">${element.nodeName.toLowerCase()}</span>`,
+    element.id ? `<span style="color: #137752">#${element.id}</span>` : '',
+    element.classList.length ? `<span style="color: #E7040F;">.${Array.from(element.classList).join('.')}</span>` : '',
+    '</span>',
+  ].join('')
+
+  cardElement.innerHTML = `
+<div style="overflow-x: clip;white-space: nowrap;text-overflow: ellipsis;padding-bottom: 0.8rem; margin-bottom: 0.8rem; border-bottom: 1px solid lightgray;">${elementInfo}</div>
+<div>Median: ${stats.median}</div>
+<div>Max: ${stats.max}</div>
+<div style="color: dimgray; font-size: 0.8rem; margin-top: 0.8rem; text-align: center;">Esc to close</div>
+`;
+
   document.body.appendChild(cardElement);
 
   return {
@@ -29,97 +48,67 @@ max-width: 20rem;
       const yOffset = 10;
       cardElement.style.top = `${viewportY + yOffset}px`;
     },
-    /**
-     * @param {HTMLElement} element - The element we're showing stats for
-     * @param {Stats} stats
-     */
-    update(element, stats) {
-      cardElement.innerHTML = `
-<div style="overflow-x: clip;white-space: nowrap;text-overflow: ellipsis;padding-bottom: 0.8rem; margin-bottom: 0.8rem; border-bottom: 1px solid lightgray;">${elementInfo(element)}</div>
-<div>Median: ${stats.median}</div>
-<div>Max: ${stats.max}</div>
-<div style="color: dimgray; font-size: 0.8rem; margin-top: 0.8rem; text-align: center;">Esc to close</div>
-`;
-
-      /**
-       * @param {HTMLElement} element
-       * @returns {string} html
-       */
-      function elementInfo(element) {
-        return [
-          '<span>',
-          `<span style="color: #5E2CA5;">${element.nodeName.toLowerCase()}</span>`,
-          element.id ? `<span style="color: #137752">#${element.id}</span>` : '',
-          element.classList.length ? `<span style="color: #E7040F;">.${Array.from(element.classList).join('.')}</span>` : '',
-          '</span>',
-        ].join('');
-      }
-    },
     destroy() {
       cardElement.remove();
     },
   };
 }
 
-let infoCard = null;
+let floatingInfoCard = null;
 
-trackMouse({
+const stopTrackingMouse = trackMouse({
   onMouseOver(event) {
     const target = event.target;
 
     if (target instanceof HTMLElement) {
       const stats = computeStats(lineLengths(target));
       if (stats) {
-        infoCard = createInfoCard();
-        infoCard.update(target, stats);
-        infoCard.moveTo(event.clientX, event.clientY);
+        floatingInfoCard = createInfoCard(target, stats);
+        floatingInfoCard.moveTo(event.clientX, event.clientY);
       }
     }
   },
   onMouseOut() {
-    if (infoCard) {
-      infoCard.destroy();
+    if (floatingInfoCard) {
+      floatingInfoCard.destroy();
     }
-    infoCard = null;
+    floatingInfoCard = null;
   },
   onMouseMove(event) {
-    if (infoCard) {
-      infoCard.moveTo(event.clientX, event.clientY);
+    if (floatingInfoCard) {
+      floatingInfoCard.moveTo(event.clientX, event.clientY);
     }
-  },
-  onTearDown() {
-    if (infoCard) {
-      infoCard.destroy();
-    }
-    infoCard = null;
   }
 });
 
-function trackMouse({onMouseOver, onMouseOut, onMouseMove, onTearDown}) {
-  /**
-   * @param {KeyboardEvent} event
-  */
- function onKeyDown(event) {
-   if (event.key === 'Escape') {
-     tearDown();
-    }
-  }
+/**
+ * @param {KeyboardEvent} event
+ */
+function turnOffWhenEsc(event) {
+  if (event.key === 'Escape') {
+    document.removeEventListener('keydown', turnOffWhenEsc);
 
+    stopTrackingMouse();
+
+    if (floatingInfoCard) {
+      floatingInfoCard.destroy();
+    }
+    floatingInfoCard = null;
+   }
+}
+
+document.addEventListener('keydown', turnOffWhenEsc);
+
+function trackMouse({onMouseOver, onMouseOut, onMouseMove}) {
   document.addEventListener('mouseover', onMouseOver);
   document.addEventListener('mouseout', onMouseOut);
   document.addEventListener('mousemove', onMouseMove);
-  document.addEventListener('keydown', onKeyDown);
 
-  function tearDown() {
+  return () => {
     document.removeEventListener('mouseover', onMouseOver);
     document.removeEventListener('mouseout', onMouseOut);
     document.removeEventListener('mousemove', onMouseMove);
-    document.removeEventListener('keydown', onKeyDown);
-
-    onTearDown && onTearDown();
-  }
-
-  return tearDown;
+  };
 }
 
 /**
