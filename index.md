@@ -4,7 +4,7 @@ layout: layout.njk
 
 # {{title}}
 
-This bookmarklet analyzes line lengths of an element.
+This bookmarklet analyzes text line lengths within an element.
 
 ## Install
 
