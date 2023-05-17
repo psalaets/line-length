@@ -46,19 +46,35 @@ z-index: 1;
         cardElement.innerHTML = '';
       },
       /**
+       * @param {HTMLElement} element - The element we're showing stats for
        * @param {Stats} stats
        */
-      update(stats) {
+      update(element, stats) {
         cardElement.innerHTML = `
+<div style="padding-bottom: 0.8rem; margin-bottom: 0.8rem; border-bottom: 1px solid lightgray;">${elementInfo(element)}</div>
 <div>Median: ${stats.median}</div>
 <div>Max: ${stats.max}</div>
-<div style="color: dimgray; font-size: 0.75rem; margin-top: 1rem; text-align: center;">Esc to close</div>
+<div style="color: dimgray; font-size: 0.75rem; margin-top: 0.8rem; text-align: center;">Esc to close</div>
 `;
       },
       destroy() {
         cardElement.remove();
       },
     };
+  }
+
+  /**
+   * @param {HTMLElement} element
+   * @returns {HTMLElement}
+   */
+  function elementInfo(element) {
+    return [
+      '<span>',
+      `<span style="color: #5E2CA5">${element.nodeName.toLowerCase()}</span>`,
+      element.id ? `<span style="color: #137752">#${element.id}</span>` : '',
+      element.classList.length ? `<span style="color: #E7040F">.${Array.from(element.classList).join('.')}</span>` : '',
+      '</span>',
+    ].join('');
   }
 
   /**
@@ -70,7 +86,7 @@ z-index: 1;
     if (target instanceof HTMLElement) {
       const stats = computeStats(lineLengths(target));
       if (stats) {
-        infoCard.update(stats);
+        infoCard.update(target, stats);
         infoCard.moveTo(event.clientX, event.clientY);
         infoCard.show();
       }
