@@ -1,5 +1,35 @@
 import { splitTextNodes } from "split-text-nodes";
 
+
+let floatingInfoCard = null;
+
+const stopTrackingMouse = trackMouse(
+  function onMouseOver(event) {
+    const target = event.target;
+
+    if (target instanceof HTMLElement) {
+      const stats = computeStats(lineLengths(target));
+      if (stats) {
+        floatingInfoCard = createInfoCard(target, stats);
+        floatingInfoCard.moveTo(event.clientX, event.clientY);
+      }
+    }
+  },
+  function onMouseOut() {
+    if (floatingInfoCard) {
+      floatingInfoCard.destroy();
+    }
+    floatingInfoCard = null;
+  },
+  function onMouseMove(event) {
+    if (floatingInfoCard) {
+      floatingInfoCard.moveTo(event.clientX, event.clientY);
+    }
+  }
+);
+
+document.addEventListener('keydown', offWhenEscape);
+
 /**
  * @param {HTMLElement} element
  * @param {Stats} stats
@@ -29,7 +59,7 @@ max-width: 20rem;
   ].join('')
 
   cardElement.innerHTML = `
-<div style="overflow-x: clip;white-space: nowrap;text-overflow: ellipsis;padding-bottom: 0.8rem; margin-bottom: 0.8rem; border-bottom: 1px solid lightgray;">${elementInfo}</div>
+<div style="overflow-x: clip;white-space: nowrap;text-overflow: ellipsis;padding-bottom: 0.8rem; margin-bottom: 0.8rem; border-bottom: 1px solid #d3d3d3;">${elementInfo}</div>
 <div>Median: ${stats.median}</div>
 <div>Max: ${stats.max}</div>
 <div style="color: dimgray; font-size: 0.8rem; margin-top: 0.8rem; text-align: center;">Esc to close</div>
@@ -54,39 +84,12 @@ max-width: 20rem;
   };
 }
 
-let floatingInfoCard = null;
-
-const stopTrackingMouse = trackMouse({
-  onMouseOver(event) {
-    const target = event.target;
-
-    if (target instanceof HTMLElement) {
-      const stats = computeStats(lineLengths(target));
-      if (stats) {
-        floatingInfoCard = createInfoCard(target, stats);
-        floatingInfoCard.moveTo(event.clientX, event.clientY);
-      }
-    }
-  },
-  onMouseOut() {
-    if (floatingInfoCard) {
-      floatingInfoCard.destroy();
-    }
-    floatingInfoCard = null;
-  },
-  onMouseMove(event) {
-    if (floatingInfoCard) {
-      floatingInfoCard.moveTo(event.clientX, event.clientY);
-    }
-  }
-});
-
 /**
  * @param {KeyboardEvent} event
  */
-function turnOffWhenEsc(event) {
+function offWhenEscape(event) {
   if (event.key === 'Escape') {
-    document.removeEventListener('keydown', turnOffWhenEsc);
+    document.removeEventListener('keydown', offWhenEscape);
 
     stopTrackingMouse();
 
@@ -97,9 +100,13 @@ function turnOffWhenEsc(event) {
    }
 }
 
-document.addEventListener('keydown', turnOffWhenEsc);
-
-function trackMouse({onMouseOver, onMouseOut, onMouseMove}) {
+/**
+ * @param {(e: MouseEvent) => void} onMouseOver
+ * @param {(e: MouseEvent) => void} onMouseOut
+ * @param {(e: MouseEvent) => void} onMouseMove
+ * @returns {() => void} clean up function
+ */
+function trackMouse(onMouseOver, onMouseOut, onMouseMove) {
   document.addEventListener('mouseover', onMouseOver);
   document.addEventListener('mouseout', onMouseOut);
   document.addEventListener('mousemove', onMouseMove);
