@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://unpkg.com/awsm.css/dist/awsm_theme_white.min.css" media="(prefers-color-scheme: no-preference), (prefers-color-scheme: light)">
+  <link rel="stylesheet" href="https://unpkg.com/awsm.css/dist/awsm_theme_black.min.css" media="(prefers-color-scheme: dark)">
+  <title>line-length</title>
+</head>
+<body>
+  <main>
+    <h1>line-length</h1>
+<p>This bookmarklet analyzes the lengths of lines of text within a dom element.</p>
+<h2>Install</h2>
+<p>Drag this link to the bookmarks toolbar: <a href="javascript:(function(){function*e(t){for(const o of t.childNodes)o.nodeType===Node.TEXT_NODE?yield o:n(o)&amp;&amp;(yield*e(o))}function n(e){return e.nodeType===Node.ELEMENT_NODE&amp;&amp;e instanceof HTMLElement}function t(n,t={}){var o,r;const s=null!==(o=t.split)&amp;&amp;void 0!==o?o:e=&gt;e.split(/&#92;b/),i=null!==(r=t.wrap)&amp;&amp;void 0!==r?r:e=&gt;{const n=document.createElement(&quot;span&quot;);return n.textContent=e,n};return Array.from(e(n)).forEach((e=&gt;{const n=Array.from(s(e.data),(n=&gt;{const t=i(n,e);return t instanceof HTMLElement&amp;&amp;(t.dataset.stnWrapper=&quot;&quot;),t}));e.replaceWith(...n)})),function(){n.querySelectorAll(&quot;[data-stn-wrapper]&quot;).forEach((e=&gt;{var n;return e.replaceWith(null!==(n=e.textContent)&amp;&amp;void 0!==n?n:&quot;&quot;)})),n.normalize()}}let o=null;const r=(s=function(e){const n=e.target;if(n instanceof HTMLElement){const s=(r=function(e){const n=&quot;ll-wrap&quot;,o=t(e,{wrap(e){const t=document.createElement(&quot;span&quot;);return t.classList.add(n),t.textContent=e,t}}),r=new Map;for(const t of e.querySelectorAll(`.${n}`)){const{top:e}=t.getBoundingClientRect(),n=r.get(e)||&quot;&quot;,o=t.innerText||&quot;&quot;;r.set(e,n+o)}const s=Array.from(r.values(),(e=&gt;e.trim().length));return o(),s}(n)).length&gt;0?{max:Math.max(...r),median:l(r)}:null;s&amp;&amp;(o=function(e,n){const t=document.createElement(&quot;div&quot;);t.style.cssText=&quot;&#92;ncolor: #111;&#92;nbackground-color: #fff;&#92;nborder: 2px solid #111;&#92;nborder-radius: 0.5rem;&#92;nbox-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;&#92;nfont-size: 1rem;&#92;nfont-family: Consolas, monaco, monospace;&#92;npadding: 0.8rem;&#92;nposition: fixed;&#92;nz-index: 1;&#92;nmax-width: 20rem;&#92;n&quot;;const o=[&quot;&lt;span&gt;&quot;,`&lt;span style=&quot;color: #5E2CA5;&quot;&gt;${e.nodeName.toLowerCase()}&lt;/span&gt;`,e.id?`&lt;span style=&quot;color: #137752&quot;&gt;#${e.id}&lt;/span&gt;`:&quot;&quot;,e.classList.length?`&lt;span style=&quot;color: #E7040F;&quot;&gt;.${Array.from(e.classList).join(&quot;.&quot;)}&lt;/span&gt;`:&quot;&quot;,&quot;&lt;/span&gt;&quot;].join(&quot;&quot;);return t.innerHTML=`&#92;n&lt;div style=&quot;overflow-x: clip;white-space: nowrap;text-overflow: ellipsis;padding-bottom: 0.8rem; margin-bottom: 0.8rem; border-bottom: 1px solid #d3d3d3;&quot;&gt;${o}&lt;/div&gt;&#92;n&lt;div&gt;Median: ${n.median}&lt;/div&gt;&#92;n&lt;div&gt;Max: ${n.max}&lt;/div&gt;&#92;n&lt;div style=&quot;color: dimgray; font-size: 0.8rem; margin-top: 0.8rem; text-align: center;&quot;&gt;Esc to close&lt;/div&gt;&#92;n`,document.body.appendChild(t),{moveTo(e,n){t.style.left=`${e}px`;const o=10;t.style.top=`${n+o}px`},destroy(){t.remove()}}}(n,s),o.moveTo(e.clientX,e.clientY))}var r},i=function(){o&amp;&amp;o.destroy(),o=null},a=function(e){o&amp;&amp;o.moveTo(e.clientX,e.clientY)},document.addEventListener(&quot;mouseover&quot;,s),document.addEventListener(&quot;mouseout&quot;,i),document.addEventListener(&quot;mousemove&quot;,a),()=&gt;{document.removeEventListener(&quot;mouseover&quot;,s),document.removeEventListener(&quot;mouseout&quot;,i),document.removeEventListener(&quot;mousemove&quot;,a)});var s,i,a;function l(e){const n=e.slice().sort(((e,n)=&gt;e-n)),t=Math.floor(n.length/2);return n.length%2!=0?n[t]:(n[t-1]+n[t])/2}document.addEventListener(&quot;keydown&quot;,(function e(n){&quot;Escape&quot;===n.key&amp;&amp;(document.removeEventListener(&quot;keydown&quot;,e),r(),o&amp;&amp;o.destroy(),o=null)}))})();
+">line-length</a></p>
+<h2>Usage</h2>
+<p>After installing the bookmarklet,</p>
+<ol>
+<li>Click line-length in the bookmarks toolbar</li>
+<li>Mouse over any elements that contain text</li>
+<li>Press Esc when done.</li>
+</ol>
+<h2>Demo</h2>
+<p>Activate the bookmarklet then mouse over these paragraphs.</p>
+<p style="width: 30rem;" id="first">
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Velit sed ullamcorper morbi tincidunt ornare. Turpis cursus in hac habitasse platea dictumst quisque sagittis purus. Curabitur gravida arcu ac tortor. A pellentesque sit amet porttitor eget dolor. Adipiscing vitae proin sagittis nisl rhoncus mattis rhoncus urna neque.
+</p>
+<p style="width: 40rem;" id="second" class="a b c width-2">
+  Ac turpis egestas maecenas pharetra convallis. Fringilla urna porttitor rhoncus dolor purus non enim praesent. Eu nisl nunc mi ipsum faucibus. Neque ornare aenean euismod elementum nisi. Dui sapien eget mi proin sed libero enim. Ultrices eros in cursus turpis massa tincidunt. Vitae auctor eu augue ut. Vulputate eu scelerisque felis imperdiet proin fermentum leo vel. Est sit amet facilisis magna etiam.
+</p>
+<p style="width: 50rem;" class="x y z width-3">
+  Mus mauris vitae ultricies leo integer malesuada nunc. Eget egestas purus viverra accumsan in. Gravida in fermentum et sollicitudin ac orci phasellus. Sed euismod nisi porta lorem mollis. Augue mauris augue neque gravida in. Eget egestas purus viverra accumsan in. Integer vitae justo eget magna fermentum iaculis. Tincidunt lobortis feugiat vivamus at augue. Tortor posuere ac ut consequat semper viverra. Porttitor eget dolor morbi non arcu risus quis varius quam. Aliquam nulla facilisi cras fermentum. Ac placerat vestibulum lectus mauris ultrices. Sed turpis tincidunt id aliquet risus feugiat. Gravida rutrum quisque non tellus orci ac auctor augue mauris. Suspendisse potenti nullam ac tortor vitae purus. Turpis nunc eget lorem dolor sed viverra ipsum nunc.
+</p>
+
+  </main>
+</body>
+</html>
