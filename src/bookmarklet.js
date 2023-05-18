@@ -1,5 +1,4 @@
-import { splitTextNodes } from "split-text-nodes";
-
+import { elementLineLength } from "element-line-length";
 
 let floatingInfoCard = null;
 
@@ -8,7 +7,7 @@ const stopTrackingMouse = trackMouse(
     const target = event.target;
 
     if (target instanceof HTMLElement) {
-      const stats = computeStats(lineLengths(target));
+      const stats = computeStats(elementLineLength(target));
       if (stats) {
         floatingInfoCard = createInfoCard(target, stats);
         floatingInfoCard.moveTo(event.clientX, event.clientY);
@@ -146,44 +145,4 @@ function median(lengths) {
     ? sortedLengths[middleIndex]
     // even length, return mean of the 2 middle items
     : (sortedLengths[middleIndex - 1] + sortedLengths[middleIndex]) / 2;
-}
-
-/**
- * @param {HTMLElement} element
- * @returns {Array<number>}
- */
-function lineLengths(element) {
-  const wrapperClass = 'll-wrap';
-
-  // Put wrapper elements around words and whitespace
-  const revert = splitTextNodes(element, {
-    wrap(chunk) {
-      const el = document.createElement('span');
-      el.classList.add(wrapperClass);
-      el.textContent = chunk;
-      return el;
-    }
-  });
-
-  // Group wrapper elements by line
-  const wrappersByLine = new Map();
-  for (const wrapper of element.querySelectorAll(`.${wrapperClass}`)) {
-    const { top } = wrapper.getBoundingClientRect();
-
-    if (wrappersByLine.has(top)) {
-      wrappersByLine.get(top).push(wrapper);
-    } else {
-      wrappersByLine.set(top, [wrapper]);
-    }
-  }
-
-  // Count characters per line
-  const lengths = Array.from(wrappersByLine.values(), wrappers =>
-    wrappers.reduce((total, wrapper) =>
-      total + (wrapper.textContent || '').length, 0)
-  );
-
-  revert();
-
-  return lengths;
 }
