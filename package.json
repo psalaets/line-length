@@ -1,7 +1,7 @@
 {
   "name": "line-length",
   "version": "1.0.0",
-  "description": "Analyze line lengths in a dom element",
+  "description": "Measure lengths of text on a page",
   "scripts": {
     "serve": "npx @11ty/eleventy --serve",
     "build": "npx @11ty/eleventy",
