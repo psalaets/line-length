@@ -1,17 +1,23 @@
 import { elementLineLength } from "element-line-length";
 
 const stopTrackingMouse = trackMouse();
-document.addEventListener('keydown', offWhenEscape);
+whenEscape(stopTrackingMouse);
 
 /**
- * @param {KeyboardEvent} event
+ * @param {() => void} callback
  */
-function offWhenEscape(event) {
-  if (event.key === 'Escape') {
-    document.removeEventListener('keydown', offWhenEscape);
+function whenEscape(callback) {
+  /**
+   * @param {KeyboardEvent} event
+   */
+  const keyHandler = (event) => {
+    if (event.key === 'Escape') {
+      document.removeEventListener('keydown', keyHandler);
+      callback();
+    }
+  };
 
-    stopTrackingMouse();
-  }
+  document.addEventListener('keydown', keyHandler);
 }
 
 /**
