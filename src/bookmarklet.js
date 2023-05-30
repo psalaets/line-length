@@ -71,12 +71,14 @@ background-color: #fff;
 border: 2px solid #111;
 border-radius: 0.5rem;
 box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-font-size: 1rem;
-font-family: Consolas, monaco, monospace;
 padding: 0.8rem;
 position: fixed;
 z-index: 1;
 max-width: 20rem;
+font-family: Consolas, monaco, monospace;
+font-size: 1rem;
+line-height: 1.5;
+text-align: start;
 `;
 
   document.body.appendChild(cardElement);
