@@ -27,11 +27,18 @@ function whenEscape(callback) {
 function trackMouse() {
   let infoCard = null;
 
+  // css selectors of elements that will not be checked
+  const ignoreList = ['body'];
+
   /**
    * @param {MouseEvent} event
    */
   const onMouseOver = event => {
     const target = event.target;
+    if (ignoreList.some(selector => target.matches(selector))) {
+      return;
+    }
+
     const stats = computeStats(elementLineLength(target));
 
     if (stats) {
