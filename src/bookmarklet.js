@@ -28,7 +28,7 @@ function trackMouse() {
   let infoCard = null;
 
   // css selectors of elements that will not be checked
-  const ignoreList = ['body'];
+  const ignoreList = ['body', 'html'];
 
   /**
    * @param {MouseEvent} event
