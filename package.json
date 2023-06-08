@@ -18,6 +18,6 @@
     "rollup": "^3.21.7"
   },
   "dependencies": {
-    "element-line-length": "^2.0.0"
+    "element-line-length": "^2.2.0"
   }
 }
