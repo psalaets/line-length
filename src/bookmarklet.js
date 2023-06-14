@@ -25,27 +25,38 @@ function whenEscape(callback) {
  * @returns {() => void} Clean up function
  */
 function trackMouse() {
+  const removeGlobalStyles = createGlobalStyles();
   let infoCard = null;
 
   // css selectors of elements that will not be checked
-  const ignoreList = ['body', 'html'];
+  const ignorables = ['body', 'html'];
 
   /**
    * @param {MouseEvent} event
    */
   const onMouseOver = event => {
     const target = event.target;
-    if (ignoreList.some(selector => target.matches(selector))) {
+    if (ignorables.some(selector => target.matches(selector))) {
       return;
     }
 
-    const stats = computeStats(elementLineLength(target));
+    // Mark current element
+    target.dataset.lineLengthSubject = '';
 
+    const stats = computeStats(elementLineLength(target));
     if (stats) {
       infoCard = infoCard || createInfoCard();
       infoCard.update(target, stats);
       infoCard.moveTo(event.clientX, event.clientY);
     }
+  };
+
+  /**
+   * @param {MouseEvent} event
+   */
+  const onMouseOut = event => {
+    // Unmark element
+    delete event.target.dataset.lineLengthSubject;
   };
 
   /**
@@ -59,14 +70,28 @@ function trackMouse() {
 
   document.addEventListener('mouseover', onMouseOver);
   document.addEventListener('mousemove', onMouseMove);
+  document.addEventListener('mouseout', onMouseOut);
 
   return () => {
     document.removeEventListener('mouseover', onMouseOver);
     document.removeEventListener('mousemove', onMouseMove);
+    document.removeEventListener('mouseout', onMouseOut);
 
     if (infoCard) {
       infoCard.destroy();
+      removeGlobalStyles();
     }
+  };
+}
+
+function createGlobalStyles() {
+  const styleElement = document.createElement('style');
+  styleElement.textContent = `[data-line-length-subject] { outline: 3px dotted #E7040F !important; }`;
+
+  document.body.appendChild(styleElement);
+
+  return () => {
+    document.body.removeChild(styleElement);
   };
 }
 
