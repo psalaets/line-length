@@ -80,7 +80,7 @@ border-radius: 0.5rem;
 box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 padding: 0.8rem;
 position: fixed;
-z-index: 1;
+z-index: 10;
 max-width: 20rem;
 font-family: Consolas, monaco, monospace;
 font-size: 1rem;
