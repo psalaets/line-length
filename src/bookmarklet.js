@@ -90,9 +90,7 @@ function createGlobalStyles() {
 
   document.body.appendChild(styleElement);
 
-  return () => {
-    document.body.removeChild(styleElement);
-  };
+  return () => styleElement.remove();
 }
 
 function createInfoCard() {
