@@ -20,7 +20,7 @@ After installing the bookmarklet,
 
 ## Demo
 
-Activate the bookmarklet then mouse over these paragraphs.
+<a href="javascript:{{code}}">Activate the bookmarklet</a> then mouse over these paragraphs.
 
 <p style="width: 30rem;" id="demo-1" class="measure-narrow">
   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Velit sed ullamcorper morbi tincidunt ornare. Turpis cursus in hac habitasse platea dictumst quisque sagittis purus. Curabitur gravida arcu ac tortor. A pellentesque sit amet porttitor eget dolor. Adipiscing vitae proin sagittis nisl rhoncus mattis rhoncus urna neque.
