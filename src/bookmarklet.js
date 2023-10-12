@@ -101,6 +101,7 @@ background-color: #fff;
 border: 2px solid #111;
 border-radius: 0.5rem;
 box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+margin: 0;
 padding: 0.8rem;
 position: fixed;
 z-index: 10;
@@ -138,10 +139,10 @@ text-align: start;
       ].join('')
 
       cardElement.innerHTML = `
-<div style="overflow-x: clip;white-space: nowrap;text-overflow: ellipsis;padding-bottom: 0.8rem; margin-bottom: 0.8rem; border-bottom: 1px solid #d3d3d3;">${elementInfo}</div>
-<div>Median: ${stats.median}</div>
-<div>Max: ${stats.max}</div>
-<div style="color: dimgray; font-size: 0.8rem; margin-top: 0.8rem; text-align: center;">Esc to close</div>`;
+<div style="overflow-x: clip;white-space: nowrap;text-overflow: ellipsis;padding: 0 0 0.8rem 0; margin: 0 0 0.8rem 0; border-bottom: 1px solid #d3d3d3;">${elementInfo}</div>
+<div style="margin: inherit; line-height: inherit;">Median: ${stats.median}</div>
+<div style="margin: inherit; line-height: inherit;">Max: ${stats.max}</div>
+<div style="color: dimgray; font-size: 0.8rem; margin: 0.8rem 0 0 0; text-align: center;">Esc to close</div>`;
     },
     destroy() {
       cardElement.remove();
