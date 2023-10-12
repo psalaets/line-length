@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Measure lengths of text on a page",
   "scripts": {
-    "serve": "npx @11ty/eleventy --serve",
+    "dev": "npx @11ty/eleventy --serve",
     "build": "npx @11ty/eleventy",
     "build:github-pages": "npx @11ty/eleventy",
     "build:gitlab-pages": "npx @11ty/eleventy --input=. --output=public"
