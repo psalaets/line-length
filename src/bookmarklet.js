@@ -44,11 +44,9 @@ function trackMouse() {
     target.dataset.lineLengthSubject = '';
 
     const stats = computeStats(elementLineLength(target));
-    if (stats) {
-      infoCard = infoCard || createInfoCard();
-      infoCard.update(target, stats);
-      infoCard.moveTo(event.clientX, event.clientY);
-    }
+    infoCard = infoCard || createInfoCard();
+    infoCard.update(target, stats);
+    infoCard.moveTo(event.clientX, event.clientY);
   };
 
   /**
@@ -127,7 +125,7 @@ text-align: start;
     },
     /**
      * @param {HTMLElement} element
-     * @param {Stats} stats
+     * @param {Stats | null} stats
      */
     update(element, stats) {
       const elementInfo = [
@@ -138,10 +136,14 @@ text-align: start;
         '</span>',
       ].join('')
 
+      const charCountInfo = stats == null
+        ? '<div style="margin: inherit; line-height: inherit;">No text found</div>'
+        : `<div style="margin: inherit; line-height: inherit;">Median: ${stats.median}</div>
+<div style="margin: inherit; line-height: inherit;">Max: ${stats.max}</div>`;
+
       cardElement.innerHTML = `
 <div style="overflow-x: clip;white-space: nowrap;text-overflow: ellipsis;padding: 0 0 0.8rem 0; margin: 0 0 0.8rem 0; border-bottom: 1px solid #d3d3d3;">${elementInfo}</div>
-<div style="margin: inherit; line-height: inherit;">Median: ${stats.median}</div>
-<div style="margin: inherit; line-height: inherit;">Max: ${stats.max}</div>
+${charCountInfo}
 <div style="color: dimgray; font-size: 0.8rem; margin: 0.8rem 0 0 0; text-align: center;">Esc to close</div>`;
     },
     destroy() {

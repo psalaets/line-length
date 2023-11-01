@@ -2,6 +2,13 @@
 
 https://psalaets.github.io/line-length
 
+## Why?
+
+Line length can affect readability and accessibility.
+
+- https://baymard.com/blog/line-length-readability
+- https://www.w3.org/WAI/tutorials/page-structure/styling/#line-length
+
 ## FAQ
 
 ### Nothing happens when activating the bookmarklet.
