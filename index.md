@@ -12,8 +12,6 @@ Drag this link to the bookmarks toolbar: <a href="javascript:{{code}}">{{title}}
 
 ## Usage
 
-After installing the bookmarklet,
-
 1. Click {{title}} in the bookmarks toolbar
 2. Mouse over any elements that contain text
 3. Press Esc when done.
